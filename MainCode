@@ -1,0 +1,75 @@
+#!/usr/bin/python
+import os, sys
+import constants as c
+from wallaby import *
+
+def BlackRight():
+    return (analog(c.right_tophat)<c.right_tophat_bw)
+
+def BlackLeft():
+    return (analog(c.left_tophat)>c.left_tophat_bw)
+
+
+def forwardright():
+    mav(c.left_motor,1000) 
+    mav(c.right_motor,-1000)
+    msleep(750)
+    mav(c.left_motor,-1000)
+    mav(c.right_motor,-1000)
+    msleep(right_turn)
+    mav(c.left_motor,0)
+    mav(c.right_motor,0)
+        
+        
+def forward():
+    mav(c.left_motor,1000)
+    mav(c.right_motor,-1000)
+    msleep(10000)
+    mav(c.left_motor,0)
+    mav(c.right_motor,0)    
+    msleep(10000)
+
+
+def linefollow():
+    print "Hello World"
+    while BlackLeft():
+        print "Tophat: %d"%analog(c.right_tophat)
+        walldetect()
+        if BlackRight():
+            print "Black"
+            mav(c.right_motor, -1000)   
+        else:
+            print "White"
+            mav(c.left_motor, 1000) 
+        msleep(10)
+        mav(c.right_motor, 0)
+        mav(c.left_motor, 0) 
+                
+def walldetect():
+    print "hi"
+    while 1==1 ():
+        mav(c.left_motor, 1000)
+        mav(c.right_motor, -1000)    
+        if analog(c.depthsensor)<c.depth_mid():
+            mav(c.left_motor, 0)
+            mav(c.right_motor, 0)
+            msleep(2000) 
+
+                
+                
+def main():
+    print "hi"
+    while 1==1 ():
+        mav(c.left_motor, 1000)
+        mav(c.right_motor, -1000)    
+        if analog(c.depthsensor)<c.depth_mid():
+            mav(c.left_motor, 0)
+            mav(c.right_motor, 0)
+            msleep(2000) 
+            
+    #mav(wheelport,power)
+    #msleep(miliseconds)
+#def (name)():
+	if __name__== "__main__":
+		sys.stdout = os.fdopen(sys.stdout.fileno(),"w",0)
+		main();
