@@ -1,5 +1,4 @@
 #!/usr/bin/python
-print "start"
 import os, sys
 import constants as c
 from wallaby import *
@@ -35,7 +34,7 @@ def linefollow():
     print "Hello World"
     while BlackLeft():
         print "Tophat: %d"%analog(c.right_tophat)
-      #  walldetect()
+        walldetect()
         if BlackRight():
             print "Black"
             mav(c.right_motor, -1000)   
@@ -45,43 +44,49 @@ def linefollow():
         msleep(10)
         mav(c.right_motor, 0)
         mav(c.left_motor, 0) 
-        print "depth_sensor: %d"%analog(c.depth_sensor)
-
-def linefollow2():
-    print "Hello World"
-    print "Tophat: %d"%analog(c.right_tophat)
+                
+def followline():
     if BlackRight():
-            print "Black"
-            mav(c.right_motor, -1000)   
-        else:
-            print "White"
-            mav(c.left_motor, 1000) 
-        msleep(10)
-        mav(c.right_motor, 0)
-        mav(c.left_motor, 0) 
-        print "depth_sensor: %d"%analog(c.depth_sensor)
+        print "Black"
+        mav(c.right_motor, -1000)   
+    else:
+        print "White"
+        mav(c.left_motor, 1000) 
+    msleep(10)
+    mav(c.right_motor, 0)
+    mav(c.left_motor, 0) 
                 
 def walldetect():
     print "hi"
-    while 1==1:
+    while 1==1 ():
         mav(c.left_motor, 1000)
         mav(c.right_motor, -1000)    
         if analog(c.depthsensor)<c.depth_mid():
             mav(c.left_motor, 0)
             mav(c.right_motor, 0)
-            msleep(2000)
+            msleep(2000) 
+
+def followline_time(time):
+    end_time = seconds() + time
+    while end_time>seconds():
+        followline()
+    stop_motors()                
+                
                 
 def main():
-    print "hi - main"
-    while analog(c.depth_sensor)<c.depth_mid: 
-        linefollow()   
-        mav(c.left_motor, 0)
-        mav(c.right_motor, 0)
+    print "Start main"
+    while analog(c.depth_sensor)<c.depth_mid:
+        print "start while loop"
+        followline() 
+        print "turned on motors"
+        print "value: %d" %analog(c.depth_sensor)
             
     #mav(wheelport,power)
     #msleep(miliseconds)
 #def (name)():
-                
 if __name__== "__main__":
-	sys.stdout = os.fdopen(sys.stdout.fileno(),"w",0)
-	main();
+    sys.stdout = os.fdopen(sys.stdout.fileno(),"w",0)
+    main();
+
+
+
