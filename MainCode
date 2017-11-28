@@ -70,7 +70,7 @@ def followline_time(time):
     end_time = seconds() + time
     while end_time>seconds():
         followline()
-    stop_motors()                
+    stop_motors()               
                 
                 
 def main():
